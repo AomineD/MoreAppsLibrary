@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -29,6 +30,7 @@ public class MoreAppsIU extends AppCompatActivity {
     private AppAdapterS adapterS;
     private GetDataFromServer dataFromServer;
 
+    private View toolbar;
     private ArrayList<AppModel> aps = new ArrayList<>();
 
     @Override
@@ -37,6 +39,24 @@ public class MoreAppsIU extends AppCompatActivity {
         setContentView(R.layout.activity_more_apps_iu);
 
         recyclerView = findViewById(R.id.list_app);
+
+        toolbar = findViewById(R.id.tolb);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        /*if(getSupportActionBar() == null){
+            setSupportActionBar(toolbar);
+
+
+          //  getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }*/
 
         LinearLayoutManager li = new LinearLayoutManager(this);
 
