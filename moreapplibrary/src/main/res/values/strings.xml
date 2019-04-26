@@ -3,7 +3,7 @@
     <string name="title">More apps</string>
     <string name="install">INSTALL</string>
 
-  <string name="vaina">Ver películas en línea populares HD gratis
+    <string name="vaina">Ver películas en línea populares HD gratis
 
 EasyTV contiene la última y más reciente colección de películas y tiene muchas categorías como Hollywood English Movies, Romantic Movies, Action Movies, Horror Movies, Drama Movie, Funny and Comedy Movie Scene, Emotional Movie, Popular Movies, Historical Movies. , Crime Movies, Comedy Movies y muchas más películas.
 
@@ -14,4 +14,7 @@ Películas en español Latino
 Series de Tv
 
 Una app novedosa, sencilla y facil de manejar que puedes compartir con tus amigos, donde quiere que estés.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

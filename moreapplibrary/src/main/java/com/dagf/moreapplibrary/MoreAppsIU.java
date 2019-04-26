@@ -1,15 +1,24 @@
 package com.dagf.moreapplibrary;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.dagf.moreapplibrary.adapter.AppAdapt;
 import com.dagf.moreapplibrary.adapter.AppAdapterS;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.ramotion.foldingcell.FoldingCell;
@@ -25,9 +34,9 @@ public class MoreAppsIU extends AppCompatActivity {
 
     FoldingCell cell;
 
-    public static String urlServer = "http://wineberryhalley.com/secure/mrapps/cpanel/api.php?videos";
+    public static String urlServer = "http://wineberryhalley.com/secure/mrapps/cpanel/";
     private RecyclerView recyclerView;
-    private AppAdapterS adapterS;
+    private AppAdapt adapterS;
     private GetDataFromServer dataFromServer;
 
     private View toolbar;
@@ -58,19 +67,41 @@ public class MoreAppsIU extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }*/
 
-        LinearLayoutManager li = new LinearLayoutManager(this);
+       GridLayoutManager li = new GridLayoutManager(this, 3);
+       adapterS = new AppAdapt(this, aps, new AppAdapt.ClickApp() {
+           @Override
+           public void OnClickApp(AppModel app, ImageView v) {
+               //Toast.makeText(MoreAppsIU.this, "SI", Toast.LENGTH_SHORT).show();
 
-        adapterS = new AppAdapterS(this, aps);
+               if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                   ViewAppActivity.appn = app;
 
-        recyclerView.setLayoutManager(li);
+                  // ActivityOptions o = ActivityOptions.makeSceneTransitionAnimation(MoreAppsIU.this, v, "img");
+
+                   startActivity(new Intent(MoreAppsIU.this, ViewAppActivity.class));
+               }else{
+                   ViewAppActivity.appn = app;
+                   startActivity(new Intent(MoreAppsIU.this, ViewAppActivity.class));
+               }
+               Animatoo.animateDiagonal(MoreAppsIU.this);
+           }
+       });
+
+      //  recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        //recyclerView.setLayoutManager(new CardSliderLayoutManager(this));
+
+     //   new CardSnapHelper().attachToRecyclerView(recyclerView);
+
+       recyclerView.setLayoutManager(li);
         recyclerView.setAdapter(adapterS);
 
      //   dataFromServer.setUrlM(urlServer);
 
-        dataFromServer = new GetDataFromServer(this, urlServer,new GetDataFromServer.OnDataReceive() {
+        dataFromServer = new GetDataFromServer(this, urlServer+"api.php?videos",new GetDataFromServer.OnDataReceive() {
             @Override
             public void Correct(ArrayList<AppModel> apps) {
                 aps.addAll(apps);
+                Log.e("MAIN", "Correct: "+apps.size());
                 adapterS.notifyDataSetChanged();
             }
 
@@ -79,6 +110,10 @@ public class MoreAppsIU extends AppCompatActivity {
                 Log.e("MAIN", "Fail: "+erno);
             }
         });
+
+
+//
+   //     fr.setCustomAnimations
 
     }
 }

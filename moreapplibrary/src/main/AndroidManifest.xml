@@ -3,7 +3,9 @@
     package="com.dagf.moreapplibrary">
 
     <application>
-        <activity android:name=".MoreAppsIU"></activity>
+        <activity android:name=".ViewAppActivity"></activity>
+        <activity android:name=".MoreAppsIU" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
