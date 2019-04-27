@@ -34,7 +34,23 @@ public class MoreAppsIU extends AppCompatActivity {
 
     FoldingCell cell;
 
+    private static String spinoff = "";
+    public static void applySpin(){
+        spinoff = "spin";
+    }
+
+    public static void applyShrink(){
+        spinoff = "shrink";
+    }
+
+    public static void applySplit(){
+spinoff = "split";
+    }
+
+
+
     public static String urlServer = "http://wineberryhalley.com/secure/mrapps/cpanel/";
+    public static final String packagenameApp = "com.nothing.app";
     private RecyclerView recyclerView;
     private AppAdapt adapterS;
     private GetDataFromServer dataFromServer;
@@ -83,8 +99,20 @@ public class MoreAppsIU extends AppCompatActivity {
                    ViewAppActivity.appn = app;
                    startActivity(new Intent(MoreAppsIU.this, ViewAppActivity.class));
                }
-               Animatoo.animateDiagonal(MoreAppsIU.this);
-           }
+               switch (spinoff) {
+                   case "spin":
+                   Animatoo.animateSpin(MoreAppsIU.this);
+               break;
+                   case "shrink":
+                       Animatoo.animateShrink(MoreAppsIU.this);
+                       break;
+                   case "split":
+                       Animatoo.animateSplit(MoreAppsIU.this);
+                       break;
+                       default:
+                           Animatoo.animateInAndOut(MoreAppsIU.this);
+               }
+               }
        });
 
       //  recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -101,7 +129,13 @@ public class MoreAppsIU extends AppCompatActivity {
             @Override
             public void Correct(ArrayList<AppModel> apps) {
                 aps.addAll(apps);
-                Log.e("MAIN", "Correct: "+apps.size());
+                for(int i=0; i < aps.size(); i++){
+                    if(aps.get(i).getPackagen().equals(packagenameApp)){
+                        aps.remove(i);
+                        break;
+                    }
+                }
+              //  Log.e("MAIN", "Correct: "+apps.size());
                 adapterS.notifyDataSetChanged();
             }
 

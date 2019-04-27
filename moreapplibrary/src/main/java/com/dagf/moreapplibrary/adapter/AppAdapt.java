@@ -57,6 +57,8 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
         Picasso.get().load(Uri.parse(model.getImgBig())).transform(new CropCircleTransformation()).fit().into(appHolder.Icon);
 
 
+        appHolder.titl.setText(model.getAppName());
+
 
         appHolder.Icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +77,12 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
 
 
         private ImageView Icon;
+        private TextView titl;
 
         public AppHolder(@NonNull View itemView) {
             super(itemView);
 
+            titl = itemView.findViewById(R.id.firstTitle);
             Icon = itemView.findViewById(R.id.imagebig);
 
         }

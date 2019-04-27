@@ -16,6 +16,16 @@
         android:id="@+id/bg"
         />
 
+    <ImageView
+        android:layout_width="40dp"
+        android:id="@+id/tolb"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="2dp"
+        app:srcCompat="@drawable/ic_back"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

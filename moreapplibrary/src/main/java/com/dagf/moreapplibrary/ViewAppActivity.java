@@ -65,6 +65,15 @@ title_2.setText(appn.getAppName());
             });
 
         }
+
+       View toolbar = findViewById(R.id.tolb);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
