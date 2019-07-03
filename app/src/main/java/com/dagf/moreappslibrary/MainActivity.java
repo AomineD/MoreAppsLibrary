@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MoreAppsIU.applySplit();
-        MoreAppsIU.openIU(this);
+        MoreAppsIU.openIU(this, "fivmovies");
     }
 }

@@ -1,6 +1,7 @@
 package com.dagf.moreapplibrary;
 
 public class AppModel {
+    public String slug;
     public String getAppName() {
         return appName;
     }

@@ -27,8 +27,9 @@ import java.util.ArrayList;
 
 public class MoreAppsIU extends AppCompatActivity {
 
-    public static void openIU(Context m)
+    public static void openIU(Context m, String slug)
     {
+        MoreAppsIU.slug = slug;
         m.startActivity(new Intent(m, MoreAppsIU.class));
     }
 
@@ -51,6 +52,7 @@ spinoff = "split";
 
     public static String urlServer = "http://wineberryhalley.com/secure/mrapps/cpanel/";
     public static final String packagenameApp = "com.nothing.app";
+    public static String slug;
     private RecyclerView recyclerView;
     private AppAdapt adapterS;
     private GetDataFromServer dataFromServer;
@@ -130,7 +132,7 @@ spinoff = "split";
             public void Correct(ArrayList<AppModel> apps) {
                 aps.addAll(apps);
                 for(int i=0; i < aps.size(); i++){
-                    if(aps.get(i).getPackagen().equals(packagenameApp)){
+                    if(aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)){
                         aps.remove(i);
                         break;
                     }

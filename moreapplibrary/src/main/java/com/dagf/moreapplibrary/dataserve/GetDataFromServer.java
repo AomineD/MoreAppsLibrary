@@ -64,6 +64,7 @@ listener.Correct(GetFromJson(response));
                 AppModel app = new AppModel();
 
                 app.setAppName(orig.getString("video_title"));
+                app.slug = orig.getString("slug");
                 app.setAppDescShort(orig.getString("video_duration"));
                 app.setAppDesc(orig.getString("video_description"));
                 app.setImgBig(orig.getString("video_thumbnail_b"));
