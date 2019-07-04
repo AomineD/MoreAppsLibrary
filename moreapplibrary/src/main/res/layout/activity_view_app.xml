@@ -36,9 +36,9 @@
 
         <ImageView
             android:id="@+id/imagebig"
-            android:transitionName="img"
-            android:layout_width="205dp"
-            android:layout_height="205dp" />
+            android:layout_width="155dp"
+            android:layout_height="155dp"
+            android:transitionName="img" />
 
         <TextView
             android:id="@+id/secondTitle"
@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
+            android:layout_weight="1"
             android:fontFamily="@font/roboto"
             android:text="@string/install"
             android:textAlignment="center"
