@@ -54,7 +54,7 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
         final AppModel model = appl.get(i);
 
 
-        Picasso.get().load(Uri.parse(model.getImgBig())).transform(new CropCircleTransformation()).fit().into(appHolder.Icon);
+        Picasso.get().load(Uri.parse(model.getImgBig())).fit().into(appHolder.Icon);
 
 
         appHolder.titl.setText(model.getAppName());
