@@ -45,7 +45,7 @@ public static void loadApps(Context m){
                     break;
                 }
             }
-            Log.e("MAIN", "Correct: "+apps.size());
+          //  Log.e("MAIN", "Correct: "+apps.size());
             //adapterS.notifyDataSetChanged();
         }
 
@@ -196,27 +196,28 @@ spinoff = "split";
 
      //   dataFromServer.setUrlM(urlServer);
 
-        dataFromServer = new GetDataFromServer(this, urlServer+"api.php?videos",new GetDataFromServer.OnDataReceive() {
-            @Override
-            public void Correct(ArrayList<AppModel> apps) {
-                aps.addAll(apps);
-                for(int i=0; i < aps.size(); i++){
-                    if(aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)){
-                        aps.remove(i);
-                        break;
+        if(aps.size() < 1) {
+            dataFromServer = new GetDataFromServer(this, urlServer + "api.php?videos", new GetDataFromServer.OnDataReceive() {
+                @Override
+                public void Correct(ArrayList<AppModel> apps) {
+                    aps.addAll(apps);
+                    for (int i = 0; i < aps.size(); i++) {
+                        if (aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)) {
+                            aps.remove(i);
+                            break;
+                        }
                     }
+                    Log.e("MAIN", "Correct: " + apps.size());
+                    adapterS.notifyDataSetChanged();
                 }
-                Log.e("MAIN", "Correct: "+apps.size());
-                adapterS.notifyDataSetChanged();
-            }
 
-            @Override
-            public void Fail(String erno) {
-                Log.e("MAIN", "Fail: "+erno);
-            }
-        });
+                @Override
+                public void Fail(String erno) {
+                    Log.e("MAIN", "Fail: " + erno);
+                }
+            });
 
-
+        }
 //
    //     fr.setCustomAnimations
 
