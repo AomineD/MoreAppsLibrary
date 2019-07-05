@@ -24,6 +24,7 @@ import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MoreAppsIU extends AppCompatActivity {
 
@@ -32,6 +33,30 @@ public class MoreAppsIU extends AppCompatActivity {
         MoreAppsIU.slug = slug;
         m.startActivity(new Intent(m, MoreAppsIU.class));
     }
+
+public static void loadApps(Context m){
+   GetDataFromServer dataFromServer = new GetDataFromServer(m, urlServer+"api.php?videos",new GetDataFromServer.OnDataReceive() {
+        @Override
+        public void Correct(ArrayList<AppModel> apps) {
+            aps.addAll(apps);
+            for(int i=0; i < aps.size(); i++){
+                if(aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)){
+                    aps.remove(i);
+                    break;
+                }
+            }
+            Log.e("MAIN", "Correct: "+apps.size());
+            //adapterS.notifyDataSetChanged();
+        }
+
+        @Override
+        public void Fail(String erno) {
+            Log.e("MAIN", "Fail: "+erno);
+        }
+    });
+}
+
+
 
     FoldingCell cell;
 
@@ -58,7 +83,51 @@ spinoff = "split";
     private GetDataFromServer dataFromServer;
 
     private View toolbar;
-    private ArrayList<AppModel> aps = new ArrayList<>();
+    private static ArrayList<AppModel> aps = new ArrayList<>();
+    private static ArrayList<AppModel> promotionals = new ArrayList<>();
+
+    public static AppModel getPromotion(){
+        AppModel thisare = null;
+
+        ArrayList<Integer> s = new ArrayList<>();
+        if(promotionals.size() < 1) {
+            for (int i = 0; i < aps.size(); i++) {
+                if (aps.get(i).status > 1) {
+                    int index = (aps.get(i).status * randInt(0, 6)) + randInt(55, 80);
+                    if (index > 60) {
+                        s.add(index);
+                        promotionals.add(aps.get(i));
+                    }
+                }
+            }
+
+            for (int i = 0; i < aps.size(); i++) {
+                if (aps.get(i).status > 0) {
+                    int index = (aps.get(i).status * randInt(1, 6)) + randInt(55, 80);
+                    if (index > 60 && !promotionals.contains(aps.get(i))) {
+                        s.add(index);
+                        promotionals.add(aps.get(i));
+                    }
+                }
+            }
+        }
+
+        if(promotionals.size() > 0) {
+            for (int i = 0; i < s.size(); i++) {
+          //     Log.e("MAIN", "getPromotion: "+s.get(i) );
+                if (s.get(i) > randInt(60, 85) && !promotionals.get(i).yaSalio) {
+
+                    thisare = promotionals.get(i);
+                    promotionals.get(i).yaSalio = true;
+                    break;
+                }else{
+                    promotionals.get(i).yaSalio = false;
+                }
+            }
+        }
+
+        return thisare;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +206,7 @@ spinoff = "split";
                         break;
                     }
                 }
-              //  Log.e("MAIN", "Correct: "+apps.size());
+                Log.e("MAIN", "Correct: "+apps.size());
                 adapterS.notifyDataSetChanged();
             }
 
@@ -151,5 +220,34 @@ spinoff = "split";
 //
    //     fr.setCustomAnimations
 
+    }
+
+
+
+
+
+
+
+
+
+
+    public static int randInt(int min, int max) {
+
+        // NOTE: This will (intentionally) not run as written so that folks
+        // copy-pasting have to think about how to initialize their
+        // Random instance.  Initialization of the Random instance is outside
+        // the main scope of the question, but some decent options are to have
+        // a field that is initialized once and then re-used as needed or to
+        // use ThreadLocalRandom (if using at least Java 1.7).
+        //
+        // In particular, do NOT do 'Random rand = new Random()' here or you
+        // will get not very good / not very random results.
+        Random rand = new Random();
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 }

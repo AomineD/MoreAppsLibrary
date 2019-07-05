@@ -50,8 +50,20 @@ public class AppModel {
         this.packagen = packagen;
     }
 
+    public boolean yaSalio;
+    public int status;
     private String appName;
     private String appDescShort;
+
+    public String getPromotional() {
+        return promotional;
+    }
+
+    public void setPromotional(String promotional) {
+        this.promotional = promotional;
+    }
+
+    private String promotional;
     private String appDesc;
     private String imgBig;
     private String imgSmall;

@@ -60,8 +60,12 @@ title_2.setText(appn.getAppName());
             action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+appn.getPackagen())));
-                }
+                    if(appn.getPackagen().startsWith("com")){
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+appn.getPackagen())));
+
+                    }else if(appn.getPackagen().startsWith("http")){
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appn.getPackagen())));
+                    }                }
             });
 
         }
