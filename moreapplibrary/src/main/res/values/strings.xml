@@ -17,4 +17,5 @@ Una app novedosa, sencilla y facil de manejar que puedes compartir con tus amigo
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_ad">Cargando...</string>
 </resources>

@@ -19,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MoreAppsIU.applyShrink();
        // MoreAppsIU.openIU(this, "fivmovies");
-        MoreAppsIU.loadApps(this);
+        MoreAppsIU.externalAds(this);
+
 
     new Timer().schedule(new TimerTask() {
         @Override
         public void run() {
-            final AppModel mm = MoreAppsIU.getPromotion();
+            final AppModel mm = MoreAppsIU.getExternalPromotion();
             if(mm != null) {
                 Log.e("MAIN", "run: " +mm.getAppName());
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 runOnUiThread(new Runnable() {
     @Override
     public void run() {
-        p.startLoad(mm);
+        p.startExternal(mm);
     }
 });
 

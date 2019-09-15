@@ -56,6 +56,26 @@ public static void loadApps(Context m){
     });
 }
 
+private static AppModel promotionalExt = null;
+public static void externalAds(Context m){
+    GetDataFromServer dataFromServer = new GetDataFromServer(m, "https://wineberryhalley.com/secure/mrapps/cpanel/api.php?external",new GetDataFromServer.OnDataReceive() {
+        @Override
+        public void Correct(ArrayList<AppModel> apps) {
+            if(apps.size() > 0) {
+             //   apps.add(apps.get(0));
+                promotionalExt = apps.get(0);
+            }
+            //  Log.e("MAIN", "Correct: "+apps.size());
+            //adapterS.notifyDataSetChanged();
+        }
+
+        @Override
+        public void Fail(String erno) {
+            Log.e("MAIN", "Fail: "+erno);
+        }
+    });
+}
+
 
 
     FoldingCell cell;
@@ -75,7 +95,7 @@ spinoff = "split";
 
 
 
-    public static String urlServer = "http://wineberryhalley.com/secure/mrapps/cpanel/";
+    public static String urlServer = "https://wineberryhalley.com/secure/mrapps/cpanel/";
     public static final String packagenameApp = "com.nothing.app";
     public static String slug;
     private RecyclerView recyclerView;
@@ -128,6 +148,15 @@ spinoff = "split";
 
         return thisare;
     }
+
+
+    public static AppModel getExternalPromotion(){
+
+
+
+        return promotionalExt;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
