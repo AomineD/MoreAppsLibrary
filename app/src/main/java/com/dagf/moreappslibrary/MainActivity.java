@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 runOnUiThread(new Runnable() {
     @Override
     public void run() {
-        p.startExternal(mm);
+        p.startExternal(mm, null, 4);
     }
 });
 

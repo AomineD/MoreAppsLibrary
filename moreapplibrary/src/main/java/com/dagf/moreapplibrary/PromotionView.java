@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Random;
+
 public class PromotionView extends RelativeLayout {
     public PromotionView(Context context) {
         super(context);
@@ -31,8 +33,9 @@ public class PromotionView extends RelativeLayout {
         addView(d);
     }
 
-    public void startExternal(AppModel model){
-        View d = LayoutInflater.from(getContext()).inflate(R.layout.native_ad_facebook, (ViewGroup) getRootView(), false);
+    public void startExternal(AppModel model, View native_normal, int randu){
+        randomness(native_normal, randu);
+        View d = LayoutInflater.from(getContext()).inflate(R.layout.native_ad_promotion, (ViewGroup) getRootView(), false);
         SetupExternalPromtoion(model, d);
         addView(d);
     }
@@ -181,6 +184,22 @@ public class PromotionView extends RelativeLayout {
                     }
                 }
             });
+
+        }
+
+
+        private void randomness(View native_normal, int randposs){
+
+            Random r = new Random();
+            int randomNum = r.nextInt((10 - 1) + 1) + 1;
+
+            if(randomNum >= randposs){
+                native_normal.setVisibility(GONE);
+                setVisibility(VISIBLE);
+            }else{
+               setVisibility(GONE);
+            }
+
 
         }
 }
