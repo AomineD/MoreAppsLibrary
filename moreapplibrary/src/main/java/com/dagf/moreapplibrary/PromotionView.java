@@ -14,6 +14,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import java.util.Random;
@@ -164,18 +170,37 @@ public class PromotionView extends RelativeLayout {
             action.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(model.getPackagen().startsWith("com")){
-                        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+model.getPackagen())));
-
-                    }else if(model.getPackagen().startsWith("http")){
-                        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(model.getPackagen())));
-                    }
+                goToAppPromotional(model);
                 }
             });
 
             mediaView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    goToAppPromotional(model);
+                }
+            });
+
+        }
+
+
+
+        public void goToAppPromotional(final AppModel model){
+            RequestQueue queue = Volley.newRequestQueue(getContext());
+
+            StringRequest request = new StringRequest(Request.Method.GET, "https://wineberryhalley.com/secure/mrapps/cpanel/api.php?add_view", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if(model.getPackagen().startsWith("com")){
+                        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+model.getPackagen())));
+
+                    }else if(model.getPackagen().startsWith("http")){
+                        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(model.getPackagen())));
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
                     if(model.getPackagen().startsWith("com")){
                         getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+model.getPackagen())));
 
@@ -184,6 +209,8 @@ public class PromotionView extends RelativeLayout {
                     }
                 }
             });
+
+            queue.add(request);
 
         }
 
