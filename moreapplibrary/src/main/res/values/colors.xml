@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000000</color>
+    <color name="colorIndic">#3EB9CF</color>
+
+    <color name="colorIndicDark">#1F798A</color>
+
+    <color name="whiteplate">#ECEBEB</color>
+
+    <color name="duskYellow">#EED91C</color>
+
+    <color name="lightGrey">#C9C6C6</color>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightGrey</item>
+        <item name="colorControlActivated">@color/duskYellow</item>
+    </style>
 </resources>

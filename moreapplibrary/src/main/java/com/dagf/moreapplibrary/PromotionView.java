@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -188,7 +188,7 @@ public class PromotionView extends RelativeLayout {
         public void goToAppPromotional(final AppModel model){
             RequestQueue queue = Volley.newRequestQueue(getContext());
 
-            StringRequest request = new StringRequest(Request.Method.GET, "https://wineberryhalley.com/secure/mrapps/cpanel/api.php?add_view", new Response.Listener<String>() {
+            StringRequest request = new StringRequest(Request.Method.GET, MoreAppsIU.urlServer+"api.php?add_view", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     if(model.getPackagen().startsWith("com")){

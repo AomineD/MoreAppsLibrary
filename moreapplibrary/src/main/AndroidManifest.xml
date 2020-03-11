@@ -3,8 +3,9 @@
     package="com.dagf.moreapplibrary">
 
     <application>
-        <activity android:name=".ViewAppActivity"></activity>
-        <activity android:name=".MoreAppsIU" />
+        <activity android:name=".IntersticialPromo" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity android:name=".ViewAppActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".MoreAppsIU" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

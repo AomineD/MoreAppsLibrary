@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="download_ins">下载</string>
+    <string name="title">应用</string>
+    <string name="install">安装</string>
+</resources>

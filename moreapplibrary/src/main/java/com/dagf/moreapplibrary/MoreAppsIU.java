@@ -1,26 +1,25 @@
 package com.dagf.moreapplibrary;
 
-import android.app.ActivityOptions;
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.dagf.moreapplibrary.adapter.AppAdapt;
-import com.dagf.moreapplibrary.adapter.AppAdapterS;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
+import com.google.android.material.tabs.TabLayout;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
@@ -35,7 +34,9 @@ public class MoreAppsIU extends AppCompatActivity {
     }
 
 public static void loadApps(Context m){
-   GetDataFromServer dataFromServer = new GetDataFromServer(m, urlServer+"api.php?videos",new GetDataFromServer.OnDataReceive() {
+        aps.clear();
+    //Log.e("MAIN", "loadApps: "+urlActual );
+   GetDataFromServer dataFromServer = new GetDataFromServer(m, urlActual,new GetDataFromServer.OnDataReceive() {
         @Override
         public void Correct(ArrayList<AppModel> apps) {
             aps.addAll(apps);
@@ -55,6 +56,43 @@ public static void loadApps(Context m){
         }
     });
 }
+
+
+private View ic_apps_icon;
+    public void loadApplications(Context m){
+        aps.clear();
+        lottieLoading.setVisibility(View.VISIBLE);
+        ic_apps_icon.setVisibility(View.GONE);
+        //Log.e("MAIN", "loadAppls: "+urlActual );
+        GetDataFromServer dataFromServer = new GetDataFromServer(m, urlActual,new GetDataFromServer.OnDataReceive() {
+            @Override
+            public void Correct(ArrayList<AppModel> apps) {
+                aps.addAll(apps);
+                for(int i=0; i < aps.size(); i++){
+                    if(aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)){
+                        aps.remove(i);
+                       // Log.e("MAIN", "Correct: s" );
+                        break;
+                    }
+                }
+               // Log.e("MAIN", "Correct: "+aps.size() );
+                adapterS.notifyDataSetChanged();
+
+lottieLoading.setVisibility(View.GONE);
+                ic_apps_icon.setVisibility(View.VISIBLE);
+
+                //  Log.e("MAIN", "Correct: "+apps.size());
+                //adapterS.notifyDataSetChanged();
+            }
+
+            @Override
+            public void Fail(String erno) {
+                Log.e("MAIN", "Fail: "+erno);
+                lottieLoading.setVisibility(View.GONE);
+                ic_apps_icon.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
 private static AppModel promotionalExt = null;
 public static void externalAds(Context m){
@@ -96,9 +134,12 @@ spinoff = "split";
 
 
     public static String urlServer = "https://wineberryhalley.com/secure/mrapps/cpanel/";
+    private static String urlActual = urlServer + "api.php?videos";
     public static final String packagenameApp = "com.nothing.app";
     public static String slug;
     private RecyclerView recyclerView;
+    private TabLayout tabLayout;
+    private LottieAnimationView lottieLoading;
     private AppAdapt adapterS;
     private GetDataFromServer dataFromServer;
 
@@ -174,6 +215,33 @@ spinoff = "split";
             }
         });
 
+        ic_apps_icon = findViewById(R.id.ic_apps);
+        lottieLoading = findViewById(R.id.loading_lott);
+
+        tabLayout = findViewById(R.id.tablay);
+
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.featured)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.more_rated)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.more_downloads)));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+               loadNow(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        urlActual = urlServer + "api.php?get_premier";
+
         /*if(getSupportActionBar() == null){
             setSupportActionBar(toolbar);
 
@@ -183,7 +251,7 @@ spinoff = "split";
             getSupportActionBar().setHomeButtonEnabled(true);
         }*/
 
-       GridLayoutManager li = new GridLayoutManager(this, 3);
+       LinearLayoutManager li = new LinearLayoutManager(this);
        adapterS = new AppAdapt(this, aps, new AppAdapt.ClickApp() {
            @Override
            public void OnClickApp(AppModel app, ImageView v) {
@@ -226,25 +294,7 @@ spinoff = "split";
      //   dataFromServer.setUrlM(urlServer);
 
         if(aps.size() < 1) {
-            dataFromServer = new GetDataFromServer(this, urlServer + "api.php?videos", new GetDataFromServer.OnDataReceive() {
-                @Override
-                public void Correct(ArrayList<AppModel> apps) {
-                    aps.addAll(apps);
-                    for (int i = 0; i < aps.size(); i++) {
-                        if (aps.get(i).getPackagen().equals(packagenameApp) || aps.get(i).slug.equals(slug)) {
-                            aps.remove(i);
-                            break;
-                        }
-                    }
-                    Log.e("MAIN", "Correct: " + apps.size());
-                    adapterS.notifyDataSetChanged();
-                }
-
-                @Override
-                public void Fail(String erno) {
-                    Log.e("MAIN", "Fail: " + erno);
-                }
-            });
+   loadApplications(this);
 
         }
 //
@@ -252,13 +302,27 @@ spinoff = "split";
 
     }
 
+    private void loadNow(int position) {
 
+        switch (position){
+            case 0:
+urlActual = urlServer + "api.php?get_premier";
+                loadApplications(this);
+                break;
+            case 1:
+                urlActual = urlServer + "api.php?get_rated";
+                loadApplications(this);
+                break;
+            case 2:
+                urlActual = urlServer + "api.php?get_downloaded";
+                loadApplications(this);
+                break;
+            default:
+                urlActual = urlServer + "api.php?get_premier";
+                loadApplications(this);
+        }
 
-
-
-
-
-
+    }
 
 
     public static int randInt(int min, int max) {
@@ -280,4 +344,7 @@ spinoff = "split";
 
         return randomNum;
     }
+
+    
+
 }

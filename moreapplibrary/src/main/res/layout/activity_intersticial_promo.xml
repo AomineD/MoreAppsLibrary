@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteplate"
+    tools:context=".IntersticialPromo">
+
+
+
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/imageSlider"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:sliderAnimationDuration="3000"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="2000"
+        app:sliderIndicatorGravity="top|end"
+        android:visibility="gone"
+        android:layout_alignParentTop="true"
+        app:sliderIndicatorMargin="25dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="1.5dp"
+        app:sliderIndicatorSelectedColor="@color/colorIndic"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="3"
+        app:sliderStartAutoCycle="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="-25dp"
+        android:layout_below="@id/imageSlider"
+        android:layout_above="@id/lay_bottom"
+        >
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:visibility="gone"
+            android:id="@+id/app_img"
+            app:srcCompat="@drawable/pelis_ex"
+
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="PelisPlus"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"/>
+
+
+        <RatingBar
+            android:id="@+id/rate_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="4"
+            android:theme="@style/RatingBar"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/desc_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/app_desc"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/img_intersticial"
+        android:layout_above="@id/bottomla"
+app:srcCompat="@drawable/malumabeibe"
+        android:scaleType="fitXY"
+        />
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_alignParentBottom="true"
+    app:cardBackgroundColor="@color/colorIndic"
+    android:id="@+id/bottomla"
+    app:cardElevation="0dp"
+    />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/lay_bottom"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="25dp"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+android:scaleType="fitCenter"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/google_play_ad"
+        app:srcCompat="@drawable/google_play_ic"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:id="@+id/img_ad"
+            app:srcCompat="@drawable/ad_choices"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="2dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:text="@string/_ad"
+            android:textSize="12sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:gravity="start"
+            android:layout_marginStart="2dp"
+            android:textAlignment="textStart"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorIndicDark"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/downloadApp"
+                android:layout_marginEnd="25dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                >
+                <TextView
+                    android:id="@+id/action_app_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/download_ins"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_margin="20dp"
+                    android:textStyle="normal"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/close_btn"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_margin="5dp"
+        app:lottie_fileName="close_btn.json"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop"
+        />
+
+</RelativeLayout>

@@ -1,48 +1,71 @@
 package com.dagf.moreappslibrary;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.dagf.moreapplibrary.AppModel;
+import com.dagf.moreapplibrary.IntersticialApp;
+import com.dagf.moreapplibrary.IntersticialPromo;
 import com.dagf.moreapplibrary.MoreAppsIU;
 import com.dagf.moreapplibrary.PromotionView;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class MainActivity extends AppCompatActivity implements
+        EasyPermissions.PermissionCallbacks{
+
+    CameraWebView myWebView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        MoreAppsIU.applyShrink();
-       // MoreAppsIU.openIU(this, "fivmovies");
-        MoreAppsIU.externalAds(this);
+setContentView(R.layout.activity_main);
+       myWebView = findViewById(R.id.webv);
 
+       myWebView.setActivity(this);
 
-    new Timer().schedule(new TimerTask() {
-        @Override
-        public void run() {
-            final AppModel mm = MoreAppsIU.getExternalPromotion();
-            if(mm != null) {
-                Log.e("MAIN", "run: " +mm.getAppName());
+       myWebView.loadUrlWithCamera("https://blackdish.mx/ar3/app/");
 
-                final PromotionView p = findViewById(R.id.promotionv);
-
-runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-        p.startExternal(mm, findViewById(R.id.vieww), 4);
     }
-});
 
 
-            }else{
-                Log.e("MAIN", "run: null" );
-            }
-        }
-    }, 5500);
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+
     }
 }

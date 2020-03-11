@@ -28,10 +28,11 @@ public class GetDataFromServer {
     }
 
     private OnDataReceive truelistener;
-
+private String urr = "";
     public GetDataFromServer(Context m, String urlM,final OnDataReceive listener){
 this.truelistener = listener;
-
+      //  Log.e("MAIN", "GetDataFromServer: "+urlM );
+        urr = urlM;
         RequestQueue queue = Volley.newRequestQueue(m);
 
         StringRequest request = new StringRequest(Request.Method.GET, urlM, new Response.Listener<String>() {
@@ -58,12 +59,16 @@ listener.Correct(GetFromJson(response));
         try {
             JSONObject object = new JSONObject(js);
 
+         //   Log.e("MAIN", "GetFromJson: para la url = " +urr + " estejson " +object.toString() );
+
             JSONArray array = object.getJSONArray("MY_TUBE_APP");
 
-            String urlBack = MoreAppsIU.urlServer+array.getJSONObject(array.length() - 1).getString("background");
+           // String urlBack = MoreAppsIU.urlServer+array.getJSONObject(array.length() - 1).getString("background");
 
 
-            for(int i=0;i<array.length() - 1; i++){
+           // Log.e("MAIN", "GetFromJson: "+array.length() );
+
+            for(int i=0;i<array.length(); i++){
                 JSONObject orig = array.getJSONObject(i);
 
                 AppModel app = new AppModel();
@@ -75,9 +80,12 @@ listener.Correct(GetFromJson(response));
                 app.setAppDesc(orig.getString("video_description"));
                 app.setImgBig(orig.getString("video_thumbnail_b"));
                app.setPromotional(orig.getString("video_thumbnail_s"));
-                app.setImgSmall(urlBack);
+               app.setRate(Float.parseFloat(orig.getString("rate")));
+               app.setInstalls(orig.getInt("downloads"));
+                app.setImgSmall("");
                 app.setPackagen(orig.getString("video_url"));
 
+            //    Log.e("MAIN", "GetFromJson: "+app.getAppName() );
                 ls.add(app);
             }
 

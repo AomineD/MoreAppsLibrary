@@ -2,4 +2,15 @@
 <resources>
     <string name="title">Mas aplicaciones</string>
     <string name="install">INSTALAR</string>
+
+
+    <string name="loading_ad">Cargando...</string>
+    <string name="app_desc">PelisPLUS Chromecast, es una nueva app compatible TV Chromecast para ver pelis gratis en Android</string>
+    <string name="download_ins">DESCARGAR</string>
+    <string name="_ad">Publicidad</string>
+
+    <string name="installs">Descargas</string>
+    <string name="featured">Destacadas</string>
+    <string name="more_rated">Mejor valoradas</string>
+    <string name="more_downloads">Mas descargas</string>
 </resources>

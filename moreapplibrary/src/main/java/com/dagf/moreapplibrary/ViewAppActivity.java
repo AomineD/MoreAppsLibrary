@@ -2,11 +2,12 @@ package com.dagf.moreapplibrary;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -19,7 +20,7 @@ public class ViewAppActivity extends AppCompatActivity {
     private TextView title_2;
     private WebView desc_2;
     private ImageView Icon;
-    private TextView action;
+    private View action;
 
 
    public static AppModel appn = null;
@@ -42,10 +43,29 @@ public class ViewAppActivity extends AppCompatActivity {
 
         if(appn != null)
         {
+
+            if(appn.getRate() > 3f){
+                RatingBar v = findViewById(R.id.rate_bar);
+                v.setVisibility(View.VISIBLE);
+
+                v.setIsIndicator(true);
+                v.setRating(appn.getRate());
+            }
+
+            if(appn.getInstalls() > 99){
+                TextView k = findViewById(R.id.installs_app);
+
+                k.setVisibility(View.VISIBLE);
+
+                String ins = appn.getInstalls() +"+ " +getString(R.string.installs);
+
+                k.setText(ins);
+            }
+
 title_2.setText(appn.getAppName());
 
             desc_2.loadData(
-                    "<font color='white'>"+
+                    "<font color='black'>"+
                     appn.getAppDesc()
 +"</font>"
                     , "text/html; charset=UTF-8", null);
@@ -54,7 +74,7 @@ title_2.setText(appn.getAppName());
 
             ImageView f = findViewById(R.id.bg);
 
-            Picasso.get().load(Uri.parse(appn.getImgSmall())).transform(new BlurTransformation(this, 9, 12)).fit().into(f);
+       //     Picasso.get().load(Uri.parse(appn.getImgSmall())).transform(new BlurTransformation(this, 9, 12)).fit().into(f);
 
 
             action.setOnClickListener(new View.OnClickListener() {

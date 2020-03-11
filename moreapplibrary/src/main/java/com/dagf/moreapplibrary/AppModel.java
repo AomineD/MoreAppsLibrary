@@ -55,6 +55,25 @@ public class AppModel {
     private String appName;
     private String appDescShort;
 
+    public int getInstalls() {
+        return installs;
+    }
+
+    public void setInstalls(int installs) {
+        this.installs = installs;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    private int installs;
+    private float rate;
+
     public String getPromotional() {
         return promotional;
     }
