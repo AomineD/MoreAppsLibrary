@@ -39,11 +39,51 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 setContentView(R.layout.activity_main);
-       myWebView = findViewById(R.id.webv);
+     /*  myWebView = findViewById(R.id.webv);
 
        myWebView.setActivity(this);
 
        myWebView.loadUrlWithCamera("https://blackdish.mx/ar3/app/");
+*/
+
+     MoreAppsIU.urlServer = "https://jreva.app/cpanel/moreapps/";
+     MoreAppsIU.loadApps(this);
+     MoreAppsIU.applySpin();
+
+    MoreAppsIU.openIU(this, "moreapps");
+
+     final IntersticialApp intersticialApp = new IntersticialApp(this);
+
+     intersticialApp.setListenerPromo(new IntersticialApp.onLoadListenerPromo() {
+         @Override
+         public void onLoadSuccess() {
+             intersticialApp.showAd();
+         }
+
+         @Override
+         public void onShowIntersticial() {
+
+         }
+
+         @Override
+         public void onImpressionSuccess() {
+
+         }
+
+         @Override
+         public void onFailed(String erno) {
+
+         }
+
+         @Override
+         public void onClosed() {
+
+         }
+     });
+
+        intersticialApp.loadAds();
+
+
 
     }
 

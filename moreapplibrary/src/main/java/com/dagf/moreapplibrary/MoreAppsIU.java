@@ -36,6 +36,9 @@ public class MoreAppsIU extends AppCompatActivity {
 public static void loadApps(Context m){
         aps.clear();
     //Log.e("MAIN", "loadApps: "+urlActual );
+
+    urlActual = urlServer + "api.php?videos";
+
    GetDataFromServer dataFromServer = new GetDataFromServer(m, urlActual,new GetDataFromServer.OnDataReceive() {
         @Override
         public void Correct(ArrayList<AppModel> apps) {

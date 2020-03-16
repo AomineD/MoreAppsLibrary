@@ -56,52 +56,7 @@ private static int round = 0;
     /**
     Cargar Intersticial ahora
     **/
-     public void loadAd(){
 
-         StringRequest request = new StringRequest(Request.Method.GET, url_server+"get_ins", new Response.Listener<String>() {
-             @Override
-             public void onResponse(String response) {
-
-                 try {
-                     JSONObject object = new JSONObject(response);
-
-
-
-                 } catch (JSONException e) {
-                     e.printStackTrace();
-
-                 }
-
-
-                 addImpression();
-
-             }
-         }, new Response.ErrorListener() {
-             @Override
-             public void onErrorResponse(VolleyError error) {
-
-             }
-         });
-
-         queue.add(request);
-
-
-
-
-
-
-
-     }
-
-
-     public void showAd(Context context){
-
-         if(intersticialApp != null){
-             context.startActivity(new Intent(context, IntersticialPromo.class));
-             addImpression();
-         }
-
-     }
 
     // The expansion points is where the animation starts
     private void circularRevealCard() {
@@ -128,9 +83,15 @@ private static int round = 0;
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     //  Log.e("MAIN", "onAnimationEnd: close" );
+                    canCloseIt = true;
                     close_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if(intersticialApp.listenerPromo != null) {
+                                intersticialApp.listenerPromo.onClosed();
+                                intersticialApp.listenerPromo = null;
+                            }
+
                             finish();
                         }
                     });
@@ -193,7 +154,7 @@ private static int round = 0;
     private SliderView imageSliderView;
     private RatingBar ratingBar;
     private ImageView imgIntersticial;
-    private static IntersticialApp intersticialApp;
+    public static IntersticialApp.IntersticialObj intersticialApp;
 
 
 
@@ -267,6 +228,7 @@ desc_ad.setVisibility(View.VISIBLE);
                         addVisit();
                        // Toast.makeText(IntersticialPromo.this, "click", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intersticialApp.urltoApp)));
+        finish();
                     }
                 });
 
@@ -294,32 +256,7 @@ ratingBar.setIsIndicator(true);
 
 
     }
-
-
-    /**
-     * Esta funcion es para añadir una impresion al anuncio
-     *
-     */
-
-    private void addImpression(){
-        String url = url_server+"add_impresion&appID="+intersticialApp.id_app;
-
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("MAIN", "onResponse: impresion" );
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("MAIN", "onErrorResponse: "+error.getMessage() );
-            }
-        });
-
-        queue.add(request);
-    }
-
-
+    private boolean canCloseIt = false;
     /**
      * Esta funcion es para cuando se hace click a un intersticial
      *
@@ -343,4 +280,9 @@ ratingBar.setIsIndicator(true);
         queue.add(request);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(canCloseIt)
+        super.onBackPressed();
+    }
 }
