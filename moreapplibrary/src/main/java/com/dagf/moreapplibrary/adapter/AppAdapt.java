@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dagf.moreapplibrary.AppModel;
+import com.dagf.moreapplibrary.MoreAppsIU;
 import com.dagf.moreapplibrary.R;
 import com.squareup.picasso.Picasso;
 
@@ -52,24 +53,40 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
 
         final AppModel model = appl.get(i);
 
-      //  Log.e("MAIN", "onBindViewHolder: "+model.getImgBig() );
-        Picasso.get().load(Uri.parse(model.getImgBig())).fit().into(appHolder.Icon);
-
-
-        appHolder.titl.setText(model.getAppName());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            appHolder.desc.setText(Html.fromHtml(model.getAppDesc(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            appHolder.desc.setText(Html.fromHtml(model.getAppDesc()));
+        if(posnativ >= MoreAppsIU.maxIdsNatives){
+            posnativ = 0;
         }
 
-        appHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickapp.OnClickApp(model, appHolder.Icon);
+
+        if((i + 1) % 3 != 0) {
+
+       //     appHolder.normal_v.setVisibility(View.VISIBLE);
+            appHolder.nativ.setVisibility(View.GONE);
+            //  Log.e("MAIN", "onBindViewHolder: "+model.getImgBig() );
+            Picasso.get().load(Uri.parse(model.getImgBig())).fit().into(appHolder.Icon);
+
+
+            appHolder.titl.setText(model.getAppName());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                appHolder.desc.setText(Html.fromHtml(model.getAppDesc(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                appHolder.desc.setText(Html.fromHtml(model.getAppDesc()));
             }
-        });
+
+            appHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickapp.OnClickApp(model, appHolder.Icon);
+                }
+            });
+        }else{
+       //     appHolder.normal_v.setVisibility(View.GONE);
+            appHolder.nativ.setVisibility(View.VISIBLE);
+
+            makeNativeGreat(appHolder);
+
+        }
     }
 
     @Override
@@ -83,14 +100,44 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
         private ImageView Icon;
         private TextView titl;
         private TextView desc;
+        private View normal_v;
+        private View nativ;
 
         public AppHolder(@NonNull View itemView) {
             super(itemView);
 
+            nativ = itemView.findViewById(R.id.native1);
             titl = itemView.findViewById(R.id.firstTitle);
             Icon = itemView.findViewById(R.id.imagebig);
 desc = itemView.findViewById(R.id.firstDesc);
         }
+    }
+
+    
+    private int posnativ = 0;
+    
+    private void makeNativeGreat(AppHolder holder){
+
+        if(MoreAppsIU.easyFANMoreApps != null && MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)) {
+            MoreAppsIU.easyFANMoreApps.setupNativeView(holder.nativ, posnativ, m.getResources().getColor(R.color.white), m.getResources().getColor(R.color.black));
+            posnativ++;
+        }else{
+
+            if(posnativ < 4 && posnativ > 0){
+                posnativ++;
+            }else{
+                posnativ = 0;
+            }
+
+
+            if(MoreAppsIU.easyFANMoreApps != null && MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)){
+                MoreAppsIU.easyFANMoreApps.setupNativeView(holder.nativ, posnativ, m.getResources().getColor(R.color.white), m.getResources().getColor(R.color.black));
+                posnativ++;
+            }else{
+                Log.e("MAIN", "makeNativeGreat: ni este  a cargado "+posnativ );
+            }
+        }
+
     }
 
 }

@@ -103,9 +103,11 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
         if(ob.urltoApp.contains(context.getPackageName())){
             changeSelected();
         }
-
-
+        SharedPreferences preferences = context.getSharedPreferences("inters_pref", Context.MODE_PRIVATE);
         //Log.e("MAIN", "showAd: "+frecuency + " ? "+what_inters);
+
+        preferences.edit().putInt(key_soon_select, ob.frecuency).apply();
+
     if (!ob.id_app.isEmpty() && !ob.urltoApp.isEmpty() && frecuency >= ob.frecuency) {
         ob.listenerPromo = listenerPromo;
         IntersticialPromo.intersticialApp = ob;
@@ -116,7 +118,6 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
 
 
         frecuency = 0;
-        SharedPreferences preferences = context.getSharedPreferences("inters_pref", Context.MODE_PRIVATE);
 
         preferences.edit().putInt(key_sv, frecuency).commit();
         addImpression(ob);
@@ -154,8 +155,9 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
     }
 
 
-    private String key_sv = "JASMDASLDWWWWW";
+    private static String key_sv = "JASMDASLDWWWWW";
     private String key_inters_selected = "JAJABRONO";
+    private static String key_soon_select = "NNNWWWMMEK";
     private int frecuency = 0;
     private int max = 0;
 
@@ -187,4 +189,13 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
         void onFailed(String erno);
         void onClosed();
     }
+
+    public static boolean isReadytoShow(Context c){
+        SharedPreferences preferences = c.getSharedPreferences("inters_pref", Context.MODE_PRIVATE);
+
+int actual_int_frec = preferences.getInt(key_soon_select, 0);
+
+        return preferences.getInt(key_sv, 0) >= actual_int_frec && actual_int_frec != 0;
+
+    };
 }

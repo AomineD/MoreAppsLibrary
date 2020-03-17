@@ -50,9 +50,15 @@ setContentView(R.layout.activity_main);
      MoreAppsIU.loadApps(this);
      MoreAppsIU.applySpin();
 
-    MoreAppsIU.openIU(this, "moreapps");
+
+
+   // MoreAppsIU.openIU(this, ,,"moreapps");
 
      final IntersticialApp intersticialApp = new IntersticialApp(this);
+
+     if(IntersticialApp.isReadytoShow(this)){
+         Log.e("MAIN", "onCreate: si maricoo" );
+     }
 
      intersticialApp.setListenerPromo(new IntersticialApp.onLoadListenerPromo() {
          @Override

@@ -7,5 +7,8 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
+
+    <color name="grey_bannernativ">#BDBDBD</color>
+
     <color name="tran">#00000000</color>
 </resources>

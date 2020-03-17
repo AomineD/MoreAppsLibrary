@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.dagf.admobnativeloader.EasyFAN;
 import com.dagf.moreapplibrary.adapter.AppAdapt;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.google.android.material.tabs.TabLayout;
@@ -27,11 +28,16 @@ import java.util.Random;
 
 public class MoreAppsIU extends AppCompatActivity {
 
-    public static void openIU(Context m, String slug)
+    public static int maxIdsNatives = 0;
+    public static void openIU(Context m, EasyFAN easyFAN, int maxIds,String slug)
     {
+        easyFANMoreApps = easyFAN;
+        maxIdsNatives = maxIds;
         MoreAppsIU.slug = slug;
         m.startActivity(new Intent(m, MoreAppsIU.class));
     }
+
+    public static EasyFAN easyFANMoreApps;
 
 public static void loadApps(Context m){
         aps.clear();
