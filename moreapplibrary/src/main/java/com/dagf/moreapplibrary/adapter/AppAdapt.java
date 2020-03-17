@@ -59,10 +59,12 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
 
 
         if((i + 1) % 3 != 0) {
-
-       //     appHolder.normal_v.setVisibility(View.VISIBLE);
             appHolder.nativ.setVisibility(View.GONE);
-            //  Log.e("MAIN", "onBindViewHolder: "+model.getImgBig() );
+        }else{
+            appHolder.nativ.setVisibility(View.VISIBLE);
+
+            makeNativeGreat(appHolder);
+        }
             Picasso.get().load(Uri.parse(model.getImgBig())).fit().into(appHolder.Icon);
 
 
@@ -80,13 +82,6 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
                     onClickapp.OnClickApp(model, appHolder.Icon);
                 }
             });
-        }else{
-       //     appHolder.normal_v.setVisibility(View.GONE);
-            appHolder.nativ.setVisibility(View.VISIBLE);
-
-            makeNativeGreat(appHolder);
-
-        }
     }
 
     @Override
