@@ -24,6 +24,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +35,7 @@ import com.dagf.moreapplibrary.adapter.SliderAdapterExample;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -154,12 +156,13 @@ private static int round = 0;
     private SliderView imageSliderView;
     private RatingBar ratingBar;
     private ImageView imgIntersticial;
+    private LottieAnimationView lottieAnimationView;
     public static IntersticialApp.IntersticialObj intersticialApp;
 
 
 
 
-    public static int seconds_to_close = 6;
+    public static int seconds_to_close = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +172,7 @@ private static int round = 0;
         queue = Volley.newRequestQueue(this);
 
        setViews();
+       setupCore();
     }
 
     private void setViews() {
@@ -176,20 +180,47 @@ private static int round = 0;
 
         imageSliderView = findViewById(R.id.imageSlider);
         imgIntersticial = findViewById(R.id.img_intersticial);
+        lottieAnimationView = findViewById(R.id.loading_img);
         //TextView textView = findViewById(R.id.action_app_text);
 
 
+
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        circularRevealCard();
+                    }
+                });
+            }
+        }, 2000);
+
+
+        ratingBar = findViewById(R.id.rate_bar);
+
+ratingBar.setIsIndicator(true);
+
+
+
+
+    }
+
+    void setupCore(){
         if(intersticialApp != null) {
 
-           // textView.setText(intersticialApp.actionAd);
+            // textView.setText(intersticialApp.actionAd);
 
 
             if (intersticialApp.url_img2 != null && !intersticialApp.url_img2.equals("0") && !intersticialApp.url_img2.isEmpty()) {
+               lottieAnimationView.setVisibility(View.GONE);
                 imgIntersticial.setVisibility(View.GONE);
                 TextView title_ad = findViewById(R.id.title_ad);
                 title_ad.setVisibility(View.VISIBLE);
                 TextView desc_ad = findViewById(R.id.desc_app);
-desc_ad.setVisibility(View.VISIBLE);
+                desc_ad.setVisibility(View.VISIBLE);
                 title_ad.setText(intersticialApp.titleAd);
                 desc_ad.setText(intersticialApp.descAd);
                 ratingBar.setRating(intersticialApp.rate);
@@ -217,7 +248,18 @@ desc_ad.setVisibility(View.VISIBLE);
 
 
             } else {
-                Picasso.get().load(Uri.parse(intersticialApp.url_img1)).fit().into(imgIntersticial);
+                Picasso.get().load(Uri.parse(intersticialApp.url_img1)).fit().into(imgIntersticial, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        lottieAnimationView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
             }
 
             if (!intersticialApp.urltoApp.isEmpty()) {
@@ -226,36 +268,17 @@ desc_ad.setVisibility(View.VISIBLE);
                     @Override
                     public void onClick(View v) {
                         addVisit();
-                       // Toast.makeText(IntersticialPromo.this, "click", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(IntersticialPromo.this, "click", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intersticialApp.urltoApp)));
-        finish();
+                        finish();
                     }
                 });
 
             }
         }
-
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        circularRevealCard();
-                    }
-                });
-            }
-        }, 2000);
-
-
-        ratingBar = findViewById(R.id.rate_bar);
-
-ratingBar.setIsIndicator(true);
-
-
-
-
     }
+
+
     private boolean canCloseIt = false;
     /**
      * Esta funcion es para cuando se hace click a un intersticial
