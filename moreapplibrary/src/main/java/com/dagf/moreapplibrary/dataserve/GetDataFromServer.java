@@ -43,7 +43,7 @@ private onIntersticialListener intersticialListener;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                truelistener.Fail(error.getMessage());
+                intersticialListener.Fail(error.getMessage());
             }
         });
 
