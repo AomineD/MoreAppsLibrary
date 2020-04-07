@@ -98,6 +98,10 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
     private static int what_inters = 0;
     public void showAd(){
 
+        if(aps.size()<1 || aps.get(what_inters) == null){
+            return;
+        }
+
     IntersticialObj ob = aps.get(what_inters);
 
         if(ob.urltoApp.contains(context.getPackageName())){
