@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.dagf.admobnativeloader.EasyFAN;
+import com.dagf.admobnativeloader.EasyNativeLoader;
 import com.dagf.moreapplibrary.adapter.AppAdapt;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.google.android.material.tabs.TabLayout;
@@ -25,6 +26,8 @@ import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MoreAppsIU extends AppCompatActivity {
 
@@ -36,6 +39,17 @@ public class MoreAppsIU extends AppCompatActivity {
         MoreAppsIU.slug = slug;
         m.startActivity(new Intent(m, MoreAppsIU.class));
     }
+
+    public static void openIU(Context m, EasyNativeLoader easyFAN, int maxIds, String slug)
+    {
+        easyNativeLoader = easyFAN;
+        maxIdsNatives = maxIds;
+        MoreAppsIU.slug = slug;
+        m.startActivity(new Intent(m, MoreAppsIU.class));
+    }
+
+
+    public static EasyNativeLoader easyNativeLoader;
 
     public static EasyFAN easyFANMoreApps;
 
@@ -72,7 +86,7 @@ private View ic_apps_icon;
         aps.clear();
         lottieLoading.setVisibility(View.VISIBLE);
         ic_apps_icon.setVisibility(View.GONE);
-        //Log.e("MAIN", "loadAppls: "+urlActual );
+        Log.e("MAIN", "loadAppls: "+urlActual );
         GetDataFromServer dataFromServer = new GetDataFromServer(m, urlActual,new GetDataFromServer.OnDataReceive() {
             @Override
             public void Correct(ArrayList<AppModel> apps) {
@@ -86,7 +100,24 @@ private View ic_apps_icon;
                 }
                // Log.e("MAIN", "Correct: "+aps.size() );
                 adapterS.notifyDataSetChanged();
-
+               final Timer tm = new Timer();
+                if(easyNativeLoader != null) {
+                    tm.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                 if(!easyNativeLoader.isLoading){
+                     runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+                             Log.e("MAIN", "run: LISTOOOX" );
+                             adapterS.notifyDataSetChanged();
+                         }
+                     });
+                     tm.cancel();
+                 }
+                        }
+                    }, 2000, 1500);
+                }
 lottieLoading.setVisibility(View.GONE);
                 ic_apps_icon.setVisibility(View.VISIBLE);
 

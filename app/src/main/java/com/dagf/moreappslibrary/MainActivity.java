@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.dagf.admobnativeloader.EasyNativeLoader;
 import com.dagf.moreapplibrary.AppModel;
 import com.dagf.moreapplibrary.IntersticialApp;
 import com.dagf.moreapplibrary.IntersticialPromo;
@@ -47,13 +48,14 @@ setContentView(R.layout.activity_main);
 */
 
      MoreAppsIU.urlServer = "https://jreva.app/cpanel/moreapps/";
-     MoreAppsIU.loadApps(this);
+    // MoreAppsIU.loadApps(this);
      MoreAppsIU.applySpin();
 
+        EasyNativeLoader easyNativeLoader = new EasyNativeLoader(this, "ca-app-pub-3940256099942544/1044960115");
+        easyNativeLoader.setupAdapterNatives(3);
 
-
-   // MoreAppsIU.openIU(this, ,,"moreapps");
-
+   MoreAppsIU.openIU(this, easyNativeLoader,3,"moreapps");
+/*
      final IntersticialApp intersticialApp = new IntersticialApp(this);
 
      if(IntersticialApp.isReadytoShow(this)){
@@ -89,7 +91,7 @@ setContentView(R.layout.activity_main);
 
         intersticialApp.loadAds();
 
-
+*/
 
     }
 

@@ -60,8 +60,10 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
 
         if((i + 1) % 3 != 0) {
             appHolder.nativ.setVisibility(View.GONE);
+            appHolder.nativ2.setVisibility(View.GONE);
         }else{
-            appHolder.nativ.setVisibility(View.VISIBLE);
+          //  appHolder.nativ.setVisibility(View.VISIBLE);
+         //   appHolder.nativ2.setVisibility(View.VISIBLE);
 
             makeNativeGreat(appHolder);
         }
@@ -96,12 +98,13 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
         private TextView titl;
         private TextView desc;
         private View normal_v;
-        private View nativ;
+        private View nativ, nativ2;
 
         public AppHolder(@NonNull View itemView) {
             super(itemView);
 
             nativ = itemView.findViewById(R.id.native1);
+            nativ2 = itemView.findViewById(R.id.native2);
             titl = itemView.findViewById(R.id.firstTitle);
             Icon = itemView.findViewById(R.id.imagebig);
 desc = itemView.findViewById(R.id.firstDesc);
@@ -111,28 +114,50 @@ desc = itemView.findViewById(R.id.firstDesc);
     
     private int posnativ = 0;
     
-    private void makeNativeGreat(AppHolder holder){
+    private void makeNativeGreat(AppHolder holder) {
 
-        if(MoreAppsIU.easyFANMoreApps != null && MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)) {
-            MoreAppsIU.easyFANMoreApps.setupNativeView(holder.nativ, posnativ, m.getResources().getColor(R.color.white), m.getResources().getColor(R.color.black));
-            posnativ++;
-        }else{
-
-            if(posnativ < 4 && posnativ > 0){
-                posnativ++;
-            }else{
-                posnativ = 0;
-            }
-
-
-            if(MoreAppsIU.easyFANMoreApps != null && MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)){
+        if (MoreAppsIU.easyFANMoreApps != null) {
+            holder.nativ2.setVisibility(View.GONE);
+            if (MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)) {
+                holder.nativ.setVisibility(View.VISIBLE);
                 MoreAppsIU.easyFANMoreApps.setupNativeView(holder.nativ, posnativ, m.getResources().getColor(R.color.white), m.getResources().getColor(R.color.black));
                 posnativ++;
-            }else{
-                Log.e("MAIN", "makeNativeGreat: ni este  a cargado "+posnativ );
+            } else {
+
+                if (posnativ < 4 && posnativ > 0) {
+                    posnativ++;
+                } else {
+                    posnativ = 0;
+                }
+
+
+                if (MoreAppsIU.easyFANMoreApps.isLoadedBanner(posnativ)) {
+                    holder.nativ.setVisibility(View.VISIBLE);
+                    MoreAppsIU.easyFANMoreApps.setupNativeView(holder.nativ, posnativ, m.getResources().getColor(R.color.white), m.getResources().getColor(R.color.black));
+                    posnativ++;
+                } else {
+                    Log.e("MAIN", "makeNativeGreat: ni este  a cargado " + posnativ);
+                    holder.nativ.setVisibility(View.GONE);
+                }
             }
+        } else if (MoreAppsIU.easyNativeLoader != null) {
+
+            holder.nativ.setVisibility(View.GONE);
+if(!MoreAppsIU.easyNativeLoader.isLoading) {
+    holder.nativ2.setVisibility(View.VISIBLE);
+    MoreAppsIU.easyNativeLoader.SetupHolder(holder.nativ2, posnativ);
+    if (posnativ < MoreAppsIU.maxIdsNatives && posnativ >= 0) {
+        posnativ++;
+    } else {
+        posnativ = 0;
+    }
+}
+
+
+
+            }
+
         }
 
-    }
 
 }
