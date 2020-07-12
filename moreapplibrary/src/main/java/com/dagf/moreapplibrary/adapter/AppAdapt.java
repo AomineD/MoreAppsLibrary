@@ -143,13 +143,17 @@ desc = itemView.findViewById(R.id.firstDesc);
         } else if (MoreAppsIU.easyNativeLoader != null) {
 
             holder.nativ.setVisibility(View.GONE);
+
 if(!MoreAppsIU.easyNativeLoader.isLoading) {
     holder.nativ2.setVisibility(View.VISIBLE);
+    if(posnativ >= MoreAppsIU.maxIdsNatives){
+        posnativ = 0;
+    }
+
     MoreAppsIU.easyNativeLoader.SetupHolder(holder.nativ2, posnativ);
+
     if (posnativ < MoreAppsIU.maxIdsNatives && posnativ >= 0) {
         posnativ++;
-    } else {
-        posnativ = 0;
     }
 }
 
