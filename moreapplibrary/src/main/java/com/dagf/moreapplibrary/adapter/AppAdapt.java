@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.dagf.moreapplibrary.AppModel;
 import com.dagf.moreapplibrary.MoreAppsIU;
 import com.dagf.moreapplibrary.R;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -150,7 +152,9 @@ if(!MoreAppsIU.easyNativeLoader.isLoading) {
         posnativ = 0;
     }
 
-    MoreAppsIU.easyNativeLoader.SetupHolder(holder.nativ2, posnativ);
+  UnifiedNativeAd un = MoreAppsIU.easyNativeLoader.getNat(posnativ);
+
+    MoreAppsIU.easyNativeLoader.populateUnifiedNativeAdView(un, (UnifiedNativeAdView) holder.nativ2);
 
     if (posnativ < MoreAppsIU.maxIdsNatives && posnativ >= 0) {
         posnativ++;
