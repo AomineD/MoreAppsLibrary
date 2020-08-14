@@ -100,13 +100,14 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
         private TextView titl;
         private TextView desc;
         private View normal_v;
-        private View nativ, nativ2;
+        private View nativ, nativ2, natadmob;
 
         public AppHolder(@NonNull View itemView) {
             super(itemView);
 
             nativ = itemView.findViewById(R.id.native1);
             nativ2 = itemView.findViewById(R.id.native2);
+            natadmob = itemView.findViewById(R.id.natvadmob);
             titl = itemView.findViewById(R.id.firstTitle);
             Icon = itemView.findViewById(R.id.imagebig);
 desc = itemView.findViewById(R.id.firstDesc);
@@ -154,7 +155,7 @@ if(!MoreAppsIU.easyNativeLoader.isLoading) {
 
   UnifiedNativeAd un = MoreAppsIU.easyNativeLoader.getNat(posnativ);
 
-    MoreAppsIU.easyNativeLoader.populateUnifiedNativeAdView(un, (UnifiedNativeAdView) holder.nativ2);
+    MoreAppsIU.easyNativeLoader.populateUnifiedNativeAdView(un, (UnifiedNativeAdView) holder.natadmob);
 
     if (posnativ < MoreAppsIU.maxIdsNatives && posnativ >= 0) {
         posnativ++;

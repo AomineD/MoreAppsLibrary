@@ -108,7 +108,7 @@
             android:layout_margin="12dp"
             android:background="@color/grey_bannernativ" />
         <include
-
+android:id="@+id/natvadmob"
             layout="@layout/native_ad"
             />
         <ImageView
