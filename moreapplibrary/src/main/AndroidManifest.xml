@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dagf.moreapplibrary">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application>
         <activity android:name=".IntersticialPromo" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity android:name=".ViewAppActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

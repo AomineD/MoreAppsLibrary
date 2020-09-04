@@ -49,7 +49,7 @@ setContentView(R.layout.activity_main);
 
      MoreAppsIU.urlServer = "https://jreva.app/cpanel/moreapps/";
     // MoreAppsIU.loadApps(this);
-     MoreAppsIU.applySpin();
+    /* MoreAppsIU.applySpin();
 
         EasyNativeLoader easyNativeLoader = new EasyNativeLoader(this, "ca-app-pub-3940256099942544/1044960115");
         easyNativeLoader.setupAdapterNatives(3);

@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -21,10 +22,15 @@ import com.dagf.admobnativeloader.EasyFAN;
 import com.dagf.admobnativeloader.EasyNativeLoader;
 import com.dagf.moreapplibrary.adapter.AppAdapt;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.material.tabs.TabLayout;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,6 +54,16 @@ public class MoreAppsIU extends AppCompatActivity {
         m.startActivity(new Intent(m, MoreAppsIU.class));
     }
 
+    public static void openIU(Context m, String slug, String banner_id_ad, TypeAd t)
+    {
+        banner_id = banner_id_ad;
+        typeAd = t;
+        MoreAppsIU.slug = slug;
+        m.startActivity(new Intent(m, MoreAppsIU.class));
+    }
+
+    private static String banner_id;
+    private static TypeAd typeAd;
 
     public static EasyNativeLoader easyNativeLoader;
 
@@ -238,6 +254,11 @@ spinoff = "split";
         return promotionalExt;
     }
 
+    public enum TypeAd{
+        Facebook,
+        Google
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +266,22 @@ spinoff = "split";
         setContentView(R.layout.activity_more_apps_iu);
 
         recyclerView = findViewById(R.id.list_app);
+
+        LinearLayout l = findViewById(R.id.banner);
+
+        if(banner_id != null && banner_id.isEmpty()){
+            if(typeAd == TypeAd.Facebook){
+                AdView adView = new AdView(this, banner_id, AdSize.BANNER_HEIGHT_50);
+                adView.loadAd();
+                l.addView(adView);
+            }else{
+                com.google.android.gms.ads.AdView adView = new com.google.android.gms.ads.AdView(this);
+                adView.setAdUnitId(banner_id);
+                adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+                adView.loadAd(new AdRequest.Builder().build());
+                l.addView(adView);
+            }
+        }
 
         toolbar = findViewById(R.id.tolb);
 

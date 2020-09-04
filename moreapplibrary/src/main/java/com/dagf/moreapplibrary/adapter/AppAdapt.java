@@ -54,21 +54,24 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
     public void onBindViewHolder(@NonNull final AppHolder appHolder, int i) {
 
         final AppModel model = appl.get(i);
+if(MoreAppsIU.easyNativeLoader == null && MoreAppsIU.easyFANMoreApps == null){
 
-        if(posnativ >= MoreAppsIU.maxIdsNatives){
-            posnativ = 0;
-        }
+}else {
+    if (posnativ >= MoreAppsIU.maxIdsNatives) {
+        posnativ = 0;
+    }
 
 
-        if((i + 1) % 3 != 0) {
-            appHolder.nativ.setVisibility(View.GONE);
-            appHolder.nativ2.setVisibility(View.GONE);
-        }else{
-          //  appHolder.nativ.setVisibility(View.VISIBLE);
-         //   appHolder.nativ2.setVisibility(View.VISIBLE);
+    if ((i + 1) % 3 != 0) {
+        appHolder.nativ.setVisibility(View.GONE);
+        appHolder.nativ2.setVisibility(View.GONE);
+    } else {
+        //  appHolder.nativ.setVisibility(View.VISIBLE);
+        //   appHolder.nativ2.setVisibility(View.VISIBLE);
 
-            makeNativeGreat(appHolder);
-        }
+        makeNativeGreat(appHolder);
+    }
+}
             Picasso.get().load(Uri.parse(model.getImgBig())).fit().into(appHolder.Icon);
 
 
