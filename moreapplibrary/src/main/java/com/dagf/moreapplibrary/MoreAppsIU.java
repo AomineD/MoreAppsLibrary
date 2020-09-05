@@ -25,7 +25,9 @@ import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.tabs.TabLayout;
 import com.ramotion.foldingcell.FoldingCell;
 

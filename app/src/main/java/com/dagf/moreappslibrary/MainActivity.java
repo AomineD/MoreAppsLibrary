@@ -52,9 +52,9 @@ setContentView(R.layout.activity_main);
     /* MoreAppsIU.applySpin();
 
         EasyNativeLoader easyNativeLoader = new EasyNativeLoader(this, "ca-app-pub-3940256099942544/1044960115");
-        easyNativeLoader.setupAdapterNatives(3);
+        easyNativeLoader.setupAdapterNatives(3);*/
 
-   MoreAppsIU.openIU(this, easyNativeLoader,3,"moreapps");
+   MoreAppsIU.openIU(this,"moreapps", "ca-app-pub-3940256099942544/6300978111", MoreAppsIU.TypeAd.Google);
 /*
      final IntersticialApp intersticialApp = new IntersticialApp(this);
 

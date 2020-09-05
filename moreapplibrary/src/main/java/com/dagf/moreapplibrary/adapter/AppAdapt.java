@@ -55,7 +55,8 @@ public class AppAdapt extends RecyclerView.Adapter<AppAdapt.AppHolder> {
 
         final AppModel model = appl.get(i);
 if(MoreAppsIU.easyNativeLoader == null && MoreAppsIU.easyFANMoreApps == null){
-
+    appHolder.nativ.setVisibility(View.GONE);
+    appHolder.nativ2.setVisibility(View.GONE);
 }else {
     if (posnativ >= MoreAppsIU.maxIdsNatives) {
         posnativ = 0;
