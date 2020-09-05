@@ -271,7 +271,7 @@ spinoff = "split";
 
         LinearLayout l = findViewById(R.id.banner);
 
-        if(banner_id != null && banner_id.isEmpty()){
+        if(banner_id != null && !banner_id.isEmpty()){
             if(typeAd == TypeAd.Facebook){
                 AdView adView = new AdView(this, banner_id, AdSize.BANNER_HEIGHT_50);
                 adView.loadAd();
@@ -280,7 +280,20 @@ spinoff = "split";
                 com.google.android.gms.ads.AdView adView = new com.google.android.gms.ads.AdView(this);
                 adView.setAdUnitId(banner_id);
                 adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+                adView.setAdListener(new AdListener(){
+                    @Override
+                    public void onAdFailedToLoad(LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.e("MAIN", "onAdFailedToLoad: "+loadAdError.getMessage() );
+                    }
+
+                    @Override
+                    public void onAdLoaded() {
+                        Log.e("MAIN", "onAdLoaded: loaded" );
+                    }
+                });
                 adView.loadAd(new AdRequest.Builder().build());
+                Log.e("MAIN", "onCreate: "+banner_id );
                 l.addView(adView);
             }
         }
