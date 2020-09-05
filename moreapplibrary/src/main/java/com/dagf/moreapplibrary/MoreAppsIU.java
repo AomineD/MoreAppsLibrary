@@ -23,9 +23,11 @@ import com.dagf.admobnativeloader.EasyNativeLoader;
 import com.dagf.moreapplibrary.adapter.AppAdapt;
 import com.dagf.moreapplibrary.dataserve.GetDataFromServer;
 import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.tabs.TabLayout;
@@ -268,30 +270,40 @@ spinoff = "split";
         setContentView(R.layout.activity_more_apps_iu);
 
         recyclerView = findViewById(R.id.list_app);
+        //AdSettings.setDebugBuild(true);
 
         LinearLayout l = findViewById(R.id.banner);
 
         if(banner_id != null && !banner_id.isEmpty()){
             if(typeAd == TypeAd.Facebook){
                 AdView adView = new AdView(this, banner_id, AdSize.BANNER_HEIGHT_50);
-                adView.loadAd();
+          //      Log.e("MAIN", "onCreate: "+banner_id );
+                adView.loadAd(adView.buildLoadAdConfig().withAdListener(new AdListener() {
+                    @Override
+                    public void onError(Ad ad, AdError adError) {
+                        Log.e("MAIN", "onError: "+adError.getErrorMessage() );
+                    }
+
+                    @Override
+                    public void onAdLoaded(Ad ad) {
+                        Log.e("MAIN", "onAdLoaded: loaded" );
+                    }
+
+                    @Override
+                    public void onAdClicked(Ad ad) {
+
+                    }
+
+                    @Override
+                    public void onLoggingImpression(Ad ad) {
+
+                    }
+                }).build());
                 l.addView(adView);
             }else{
                 com.google.android.gms.ads.AdView adView = new com.google.android.gms.ads.AdView(this);
                 adView.setAdUnitId(banner_id);
                 adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
-                adView.setAdListener(new AdListener(){
-                    @Override
-                    public void onAdFailedToLoad(LoadAdError loadAdError) {
-                        super.onAdFailedToLoad(loadAdError);
-                        Log.e("MAIN", "onAdFailedToLoad: "+loadAdError.getMessage() );
-                    }
-
-                    @Override
-                    public void onAdLoaded() {
-                        Log.e("MAIN", "onAdLoaded: loaded" );
-                    }
-                });
                 adView.loadAd(new AdRequest.Builder().build());
                 Log.e("MAIN", "onCreate: "+banner_id );
                 l.addView(adView);

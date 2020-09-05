@@ -54,7 +54,7 @@ setContentView(R.layout.activity_main);
         EasyNativeLoader easyNativeLoader = new EasyNativeLoader(this, "ca-app-pub-3940256099942544/1044960115");
         easyNativeLoader.setupAdapterNatives(3);*/
 
-   MoreAppsIU.openIU(this,"moreapps", "ca-app-pub-3940256099942544/6300978111", MoreAppsIU.TypeAd.Google);
+   MoreAppsIU.openIU(this,"moreapps", "2505373932857364_2505378202856937", MoreAppsIU.TypeAd.Facebook);
 /*
      final IntersticialApp intersticialApp = new IntersticialApp(this);
 
