@@ -99,7 +99,10 @@ ArrayList<IntersticialObj> aps = new ArrayList<>();
     public void showAd(){
 
         if(aps.size() <= what_inters){
-            return;
+            what_inters = 0;
+            if(aps.size() <= what_inters){
+                return;
+            }
         }
 
         if(aps.size()<1 || aps.get(what_inters) == null){
