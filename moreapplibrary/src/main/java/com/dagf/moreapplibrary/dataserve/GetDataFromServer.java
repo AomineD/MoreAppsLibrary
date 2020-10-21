@@ -128,6 +128,7 @@ listener.Correct(GetFromJson(response));
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if(truelistener != null)
                 truelistener.Fail(error.getMessage());
             }
         });
@@ -176,6 +177,7 @@ listener.Correct(GetFromJson(response));
 
         } catch (JSONException e) {
             Log.e("MAIN", "GetFromJson: "+e.getMessage() );
+            if(truelistener != null)
             truelistener.Fail(e.getMessage());
 
             e.printStackTrace();
