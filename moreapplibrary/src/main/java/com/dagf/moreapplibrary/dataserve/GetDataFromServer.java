@@ -95,6 +95,7 @@ private onIntersticialListener intersticialListener;
 
         } catch (JSONException e) {
             Log.e("MAIN", "GetFromJson: "+e.getMessage() );
+            if(truelistener != null)
             truelistener.Fail(e.getMessage());
 
             e.printStackTrace();
